@@ -48,7 +48,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-08-19 09:27:22'
+  postUpdate: '2022-08-19 09:55:33'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -175,17 +175,24 @@ More info: Deployment
   }
 }
 window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function subtitleType () {
-  if (true) { 
-    window.typed = new Typed("#subtitle", {
-      strings: ["人生最重要的是时机，时机对了，凡事都有可能&#44。","The most important thing in life is timing.","今日事&#44;今日畢","Never put off till tomorrow what you can do today.","让那恩怨有始有终&#44。"],
-      startDelay: 300,
-      typeSpeed: 150,
-      loop: 1,
-      backSpeed: 50
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = ["人生最重要的是时机，时机对了，凡事都有可能&#44。","The most important thing in life is timing.","今日事&#44;今日畢","Never put off till tomorrow what you can do today.","让那恩怨有始有终&#44。"]
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#subtitle', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: 1,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('subtitle').innerHTML = data.hitokoto
+      }
     })
-  } else {
-    document.getElementById("subtitle").innerHTML = '人生最重要的是时机，时机对了，凡事都有可能&#44。'
-  }
 }
 
 if (true) {
@@ -196,4 +203,5 @@ if (true) {
   }
 } else {
   subtitleType()
-}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
